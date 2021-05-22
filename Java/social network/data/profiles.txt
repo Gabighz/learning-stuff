@@ -1,0 +1,5 @@
+Mark,20,10,1990,Brighton,United Kingdom,British,rugby;beer;television
+Steve,15,8,1989,Milan,Italy,Italian,books;gardening;crafting
+Casper,10,2,1970,London,United Kingdom,British,football;fishing;philosophy
+Aaron,10,2,1970,London,United Kingdom,British,football;fishing;philosophy
+Daniel,2,3,1998,Moscow,Russia,Russian,painting;music;dancing
