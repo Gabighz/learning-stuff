@@ -1,0 +1,1 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1245dada8b4f40a680ff56d96e2430f9)](https://www.codacy.com/gh/Gabighz/learning-stuff/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Gabighz/learning-stuff&amp;utm_campaign=Badge_Grade)
