@@ -7,6 +7,8 @@ package main
 
 import "fmt"
 
+// This is an interface type; in contrast with concrete types, can't directly
+// create values of type bot
 type bot interface {
 	// If there's any other type inside of our program that has a function
 	// getGreeting() associated to it, then it will also be an honorary member
