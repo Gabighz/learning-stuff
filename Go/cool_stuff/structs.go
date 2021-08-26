@@ -8,22 +8,22 @@ package main
 import "fmt"
 
 type contactInfo struct {
-	email string
+	email   string
 	zipCode int
 }
 
 type person struct {
 	firstName string
-	lastName string
-	contact contactInfo
+	lastName  string
+	contact   contactInfo
 }
 
 func main() {
 	jim := person{
-		firstName: "Jim", 
-		lastName: "Anderson",
+		firstName: "Jim",
+		lastName:  "Anderson",
 		contact: contactInfo{
-			email: "jim@gmail.com",
+			email:   "jim@gmail.com",
 			zipCode: 94000,
 		},
 	}
