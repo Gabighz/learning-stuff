@@ -1,6 +1,4 @@
-# Visual Studio Code
 .DS_Store
-
-# Rust
 Cargo.lock
 target/
+node_modules/
