@@ -9,5 +9,5 @@ We leverage the nature of smart contracts to control how the 'idea person'/manag
 Of course, it's not a perfect solution, as it assumes that the contributors are going to vote, that the vendor is not malicious, and that the address is legitimate - possibly other drawbacks too.
 
 *:
-    - There are some bugs to fix regarding the front-end of the approval mechanism for spending requests.
-    - The visual design is pretty amateurish
+- There are some bugs to fix regarding the front-end of the approval mechanism for spending requests.
+- The visual design is pretty amateurish
