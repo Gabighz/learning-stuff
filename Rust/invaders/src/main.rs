@@ -3,7 +3,6 @@
     on Udemy. See: https://github.com/CleanCut/invaders
 
     Note to self: Expand this with Level, Menu, and Score sometime in the future.
-                  There's also a bug to fix (index out of bounds)
 */
 
 use crossterm::{
