@@ -1,0 +1,16 @@
+A simple scalable, containarized nodejs app that communicates with a containarized redis
+server that keeps count of the number of visits to the app.
+
+For the first time or after changes, run with:
+    docker-compose up --build
+
+Launch in background with:
+    docker-compose up -d
+
+Shut down with:
+    docker-compose down
+
+Check status (within the directory with the docker-compose file):
+    docker-compose ps
+
+Made as part of the 'Docker and Kubernetes: The Complete Guide' course on Udemy by Stephen Grider
