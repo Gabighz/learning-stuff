@@ -1,6 +1,8 @@
 # The project
 
-The focus of this project is to build a production-grade workflow with Docker, Travis CI, and AWS
+The focus of this project is to build a production-grade workflow with Docker, Travis CI, and AWS.
+
+Made as part of the 'Docker and Kubernetes: The Complete Guide' course on Udemy by Stephen Grider.
 
 ## For development, run
     docker build . -f Dockerfile.dev
