@@ -1,0 +1,10 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build . -f Dockerfile.dev -t gabeghz/frontend
+
+script:
+  - docker run -e CI=true gabeghz/frontend npm run test
