@@ -34,3 +34,16 @@ send input to the testing interface
 ## For production env
     docker build .
     docker run -p 8080:80 <image-id>
+
+## Automation
+
+On commit to master, app will be automatically tested by Travis-CI and
+deployed to AWS Elastic Beanstalk.
+
+### Notes
+
+It's a single container deployment flow, with issues such as:
+
+- App is simple, no outside dependencies
+- Image is built multiple times, e.g. on Travis and AWS
+- Cannot connect to database

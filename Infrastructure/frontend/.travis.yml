@@ -8,3 +8,18 @@ before_install:
 
 script:
   - docker run -e CI=true gabeghz/frontend npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-west-2"
+  app: "frontend"
+  env: "Frontend-env"
+  bucket_name: "elasticbeanstalk-eu-west-2-306012412"
+  bucket_path: "frontend"
+  on:
+    branch: master
+  # Requires to setup a new user with programmatic access
+  # on the IAM Console and attaching an elasticbeanstalk 
+  # permissions policy to it.
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
