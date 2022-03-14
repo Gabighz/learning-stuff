@@ -1,0 +1,36 @@
+language: generic
+
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t gabeghz/complex-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true gabeghz/complex-test npm test -- --coverage
+
+after_success:
+  - docker build -t gabeghz/complex-client ./client
+  - docker build -t gabeghz/complex-nginx ./nginx
+  - docker build -t gabeghz/complex-server ./server
+  - docker build -t gabeghz/complex-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push gabeghz/complex-client
+  - docker push gabeghz/complex-nginx
+  - docker push gabeghz/complex-server
+  - docker push gabeghz/complex-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'eu-west-2'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-eu-west-2-923445559289'
+  bucket_path: 'docker-multi'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
