@@ -1,0 +1,19 @@
+# Simple kubernetes cluster
+
+If running locally, on MacOS, and got minikube all good, kubectl would first need:
+    minikube start --driver=hyperkit
+
+Can start it up with:
+    kubectl apply -f client-pod.yaml
+    kubectl apply -f client-node-port.yaml
+
+Can be checked with:
+    kubectl get pods
+    kubectl get services
+
+Can visit the node in your browser by pasting the output of:
+    minikube ip
+
+in the address bar and add :31515 at the end of the ip address.
+
+Made as part of the 'Docker and Kubernetes: The Complete Guide' course on Udemy by Stephen Grider
