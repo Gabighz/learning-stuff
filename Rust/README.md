@@ -4,3 +4,5 @@ Done as part of the following courses:
 
 and the book:
 - [Rust for Rustaceans](https://www.amazon.co.uk/Rust-Rustaceans-Programming-Experienced-Developers/dp/1718501854)
+
+student_grade_book was done on my own when I had zero knowledge of the language and is unfinished.
