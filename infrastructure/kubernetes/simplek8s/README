@@ -10,6 +10,15 @@ Can start it up with:
 Can be checked with:
     kubectl get pods
     kubectl get services
+    kubectl get deployments
+
+Remove an object:
+    kubectl delete -f <config-file>
+
+Get detailed info about an object:
+    kubectl describe <object type> <object name>
+such as
+    kubectl describe pod client-pod
 
 Can visit the node in your browser by pasting the output of:
     minikube ip
@@ -17,3 +26,10 @@ Can visit the node in your browser by pasting the output of:
 in the address bar and add :31515 at the end of the ip address.
 
 Made as part of the 'Docker and Kubernetes: The Complete Guide' course on Udemy by Stephen Grider
+
+## Object Types in k8s:
+- Pods = Runs one or more closely related containers
+    - Good for one-off dev purposes; rarely used in production (because of limitations like updating config)
+- Services = Sets up networking in a k8s cluster
+- Deployment = Maintains a set of identical pods, ensuring they have the correct config and that the right number exists
+    - Good for dev and for production
