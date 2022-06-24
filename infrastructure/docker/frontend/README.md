@@ -4,8 +4,6 @@ The focus of this project is to build a production-grade workflow with Docker, T
 
 ![workflow diagram](./workflow-diagram.png)
 
-Made as part of the 'Docker and Kubernetes: The Complete Guide' course on Udemy by Stephen Grider.
-
 ## For development, run
     docker build . -f Dockerfile.dev
     docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app <image_id>

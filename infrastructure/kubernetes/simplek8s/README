@@ -25,8 +25,6 @@ Can visit the node in your browser by pasting the output of:
 
 in the address bar and add :31515 at the end of the ip address.
 
-Made as part of the 'Docker and Kubernetes: The Complete Guide' course on Udemy by Stephen Grider
-
 ## Object Types in k8s:
 - Pods = Runs one or more closely related containers
     - Good for one-off dev purposes; rarely used in production (because of limitations like updating config)
