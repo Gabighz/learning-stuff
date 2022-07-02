@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: client-node-port
 spec:
-  type: NodePort
+  type: NodePort # only good for dev purposes; do not use in prod
   ports:
-    - port: 3050
-      targetPort: 3000
-      nodePort: 31515
+    - port: 3050 # another object could use this port e.g. another pod
+      targetPort: 3000 # the exposed port of the pod
+      nodePort: 31515 # the port this service would be exposed to the outside world (ie from a browser)
   selector:
-    component: web
+    component: web # i.e. find everything with this arbitrary 'component: web' label (!component is not a reserved keyword)

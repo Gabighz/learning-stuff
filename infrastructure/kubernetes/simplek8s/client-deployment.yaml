@@ -1,13 +1,13 @@
-apiVersion: apps/v1
+apiVersion: apps/v1 # ie the 'namespace' for a Deployment obj
 kind: Deployment
 metadata:
   name: client-deployment
 spec:
-  replicas: 1
-  selector:
+  replicas: 5
+  selector: # find every object that uses the 'component: web' label
     matchLabels:
       component: web
-  template:
+  template: # config that will be used for every single pod that is created by this deployment
     metadata:
       labels:
         component: web
