@@ -1,13 +1,11 @@
+## A bit more complex k8s project
+
 K8s version of:
 https://github.com/Gabighz/learning-stuff/tree/master/infrastructure/docker/complex
 
-![arch](./arch.jpeg)
-
-![path to production](./steps.jpeg)
-
 After running the below command to load the config files in k8s, the app can be visited in your local browser at the IP that's output by 'minikube ip'.
 
-### Misc new commands being used vs simplek8s:
+## Misc new commands being used vs simplek8s:
 Load multiple config files:
 
     kubectl apply -f k8s
@@ -20,12 +18,12 @@ Access minikube's cool dashboard:
 
     minikube dashboard
 
-### New objects being used vs simplek8s:
+## New objects being used vs simplek8s:
 - **ClusterIP** = Exposes a set of pods to other objects in the cluster (would be otherwise inaccessible); does not allow traffic from the outside world
 - **Ingress** = Exposes a set of services to the outside world (supposedly better than LoadBalancer). Specifically going to use [ingress-nginx](http://github.com/kubernetes/ingress-nginx) for this project.
 - **Secret** = Securely stores a piece of information in the cluster, such as a database password
 
-### Postgres PVC
+## Postgres PVC
 Postgres, unlike redis which is an in-memory data store, stores data in a filesystem.
 
 To have a consistent filesystem across pods with such databases, we need a Persistent Volume Claim to carry data over to a new pod that contains a postgres container, for example, in case the one we were using crashes and was deleted by Deployment. We really don't want loss of data on any database such as postgres.
@@ -52,7 +50,7 @@ Get info about present persistent volumes and claims:
     kubectl get pv
     kubectl get pvc
 
-### Creating a Secret object
+## Creating a Secret object
 Not using a config file because it would defeat its purpose, so we do it imperatively like this:
 
     kubectl create secret <type_of_secret> <secret_name> --from-literal (as opposed to from file) key=value
@@ -65,7 +63,7 @@ Get info about present secrets:
 
     kubectl get secrets
 
-### Ingress Service
+## Ingress Service
 The ingress controller can be installed through minikube's addon system:
 
     minikube addons enable ingress
@@ -80,7 +78,13 @@ or without Helm (also visiting the link in a browser is useful to find out more)
 
     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
 
-### Misc notes
+## Misc notes
 - We could combine the contents of any config files, separating them with '---', but we consider it's more maintainable and readable to keep them in the current separation.
 - Keep in mind that the worker is the slowest component in our app (does the fib calcs) and might need to scale out and have multiple instances.
 - Currently using one redis server, but we can set it up in cluster mode, where there are multiple copies of redis that communicate with each other and enhance overall stability and throughput. Same goes for postgres.
+
+### Diagrams
+
+![arch](./arch.jpeg)
+
+![path to production](./steps.jpeg)
