@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim
+      containers:
+        - name: postgres
+          image: postgres:13.6
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              # re. below, it's where inside the container would this storage be made available
+              # what the container would write at this path, it would actually be stored in the PVC.
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres # within the PVC, we would have a folder with this name (pretty much needed because of postgres behaviour; long story)
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
