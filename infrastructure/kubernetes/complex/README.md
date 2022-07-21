@@ -1,9 +1,86 @@
-## A bit more complex k8s project
+# A bit more complex k8s project
 
-K8s version of:
+Production-grade K8s version of:
 https://github.com/Gabighz/learning-stuff/tree/master/infrastructure/docker/complex
 
-After running the below command to load the config files in k8s, the app can be visited in your local browser at the IP that's output by 'minikube ip'.
+# Local dev
+
+    minikube start --driver=hyperkit
+    kubectl apply -f k8s
+
+After running the above commands, the app can be visited in your local browser at the IP that's output by 'minikube ip'.
+
+Or to use Skaffold, to watch for changes in the React code, in the mode of injecting them into the appropriate pods (super cool):
+
+    skaffold dev
+
+# CI/CD with Travis to GCP
+- Have this project in its own github repo and enable Travis for it
+- In your GCP Console:
+    - Initialize a Kubernetes Cluster
+    - Create a service account (e.g called travis-deployer) with a Kubernetes Engine Admin role.
+    - Create a key for this service account and download it as a JSON
+    - Rename this JSON file to service-account.json and put it in this project's folder.
+- Back to your machine, download and install the Travis CLI
+    - To do so in the most convenient way, run:
+
+            docker run -it -v $(pwd):/app ruby:2.4 sh
+            gem install travis
+
+- Encrypt and upload the json file to our Travis account
+    - Note: In travis.yml, we have code to unencrypt the json file and load it into the GCloud SDK
+    - Within the aforementioned container with travis:
+
+            travis login --github-token YOUR_PERSONAL_TOKEN --com
+            travis encrypt-file service-account.json -r USERNAME/REPO --com
+
+    - Note: **Closely** follow the instructions output by this command, including replacing the openssl line in travis.yml with the one that's been generated for you. At this point, to not make a mistake, you may delete service-account.json before pushing.
+
+- In travis.yml, deploy.sh, and the k8s Deployment files, replace the relevant variables (e.g. docker username) with your appropriate values. Also make sure you have added DOCKER_USERNAME and DOCKER_PASSWORD as env variables on travis-ci.org
+
+- Create a Secret on GCP by accessing the Cloud Shell of your GCP project and run:
+
+        gcloud config set project YOUR_PROJECT_NAME
+        gcloud config set compute/zone YOUR_CLUSTER'S_LOCATION
+        gcloud container clusters get-credentials YOUR_CLUSTER'S_NAME
+        kubectl create secret generic pgpassword --from-literal PGPASSWORD=12345
+
+- Still within the Cloud Shell, install Helm and Ingress-Nginx:
+
+        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+        chmod 700 get_helm.sh
+        ./get_helm.sh
+        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+        helm install my-release ingress-nginx/ingress-nginx
+
+- At this point, you can visit your app by visiting the IP address of the ingress-nginx-controller displayed under 'Endpoints' in the Services & Ingress tab. Fun fact: you can also find it at 'Load Balancing' under 'Network Services' in the Networking products (not specifically related to k8s)
+
+Using commit SHAs when building our docker images has two benefits: allows us to imperatively update the images used by k8s and allows us to know (and possibly debug with a git checkout) the exact code that's running in production. We're tagging with latest too so that the config files can be applied anytime without worrying about a specific SHA.
+
+### HTTPS Setup with K8s
+
+- Get a domain from domains.google.com
+    - Then assign record A with name @ to be the IP address of the load balancer and CNAME with name www the name of your domain
+- Install Cert Manager to your K8s cluster:
+
+        helm repo add jetstack https://charts.jetstack.io
+        helm repo update
+        helm install \
+        cert-manager jetstack/cert-manager \
+        --namespace cert-manager \
+        --create-namespace \
+        --version v1.8.0 \
+        --set installCRDs=true
+
+    - Check if it worked with:
+
+            kubectl get certificates
+            kubectl describe certificates
+            kubectl get secrets (there should be one called yourdomain-com of type kubernetes.io/tls)
+
+- After getting the certificate, copy the contents of k8s-https to k8s, accepting overwrites, then push the new changes to origin.
+
+# Other personal notes
 
 ## Misc new commands being used vs simplek8s:
 Load multiple config files:
@@ -88,3 +165,8 @@ or without Helm (also visiting the link in a browser is useful to find out more)
 ![arch](./arch.jpeg)
 
 ![path to production](./steps.jpeg)
+
+![ingress on gcp](./ingress-on-gcp.jpeg)
+
+### Instead of using Travis, we can use Github Actions with AWS as such:
+![alternative ci/cd](./alternative-cicd.jpeg)
