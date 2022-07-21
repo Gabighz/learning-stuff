@@ -169,4 +169,4 @@ or without Helm (also visiting the link in a browser is useful to find out more)
 ![ingress on gcp](./ingress-on-gcp.jpeg)
 
 ### Instead of using Travis, we can use Github Actions with AWS as such:
-![alternative ci/cd](./alternative-cicd.jpeg)
+![alternative ci/cd](./alternative-cicd.png)
