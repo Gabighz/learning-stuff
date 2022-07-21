@@ -9,6 +9,10 @@ Can start it up with:
     kubectl apply -f client-pod.yaml
     kubectl apply -f client-node-port.yaml
 
+or preferably instead:
+
+    kubectl apply -f client-deployment.yaml
+
 Can be checked with:
 
     kubectl get pods
