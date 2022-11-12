@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  SQStoSNSLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_sqs_to_sns.lambda_handler
+      Runtime: python3.9
+      CodeUri: ./lambda_sqs_to_sns.py
+      Role: arn:aws:iam::028282298960:role/lambda_with_queue_execution
+
+      AutoPublishAlias: live
+
+      DeploymentPreference:
+        Type: AllAtOnce

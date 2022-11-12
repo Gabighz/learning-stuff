@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
+  build:
+    commands:
+      - echo Build started on `date`
+      - sam package -t sam_template.yml --output-template-file packaged_template.yml --s3-bucket gabriel-ghiuzan-lambda-artifacts
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - packaged_template.yml

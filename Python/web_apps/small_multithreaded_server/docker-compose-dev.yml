@@ -1,0 +1,16 @@
+version: '3'
+services:
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      - FLASK_DEBUG=1
+      - FLASK_APP=/app/app.py
+    ports:
+      - "5001:5000"
+    volumes:
+      - /app/bin
+      - /app/include
+      - /app/lib
+      - .:/app
