@@ -1,0 +1,1 @@
+Done as part of the Udemy course HashiCorp Certified: Terraform Associate 2022 by Zeal Vora
