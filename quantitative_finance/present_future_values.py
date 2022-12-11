@@ -1,5 +1,13 @@
 from math import exp
 
+'''
+Keep in mind that the gross return of an investment at a periodically compounded interest rate equals the
+future discrete value of an initial investment.
+
+To calculate equivalent interest rates we can equate the gross or net returns,
+which is the same as equating the future value of 1 dollar.
+'''
+
 def future_discrete_value(x, r, n):
     return x * (1 + r) ** n
 
@@ -17,13 +25,9 @@ def periodic_compounding(x, r, t, m):
 
 if __name__ == '__main__':
 
-    # value of investment in dollars
     x = float(input("Principal: "))
-    # define the interest rate (r)
-    r = float(input("Interest rate expressed as a floating-point number: "))
-    # duration (years)
+    r = float(input("Annual interest rate expressed as a floating-point number: "))
     t = float(input("Period in years: "))
-    # optional compounding period
     m = input("Compouding period (optional): ")
 
     print("Future value (discrete model) of x: %.2f" % future_discrete_value(x, r, t))
