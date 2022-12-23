@@ -97,9 +97,6 @@ class Lightshows:
             elif command == 'toggle':
                 self.toggle(row_start, row_end, col_start, col_end)
 
-    def __repr__(self):
-        return str(self.lightshows)
-
     def __str__(self):
         return f'In this {self.ROWS}x{self.COLS} grid of lights, there are {self.lights_on()} lights on.'
 
@@ -146,4 +143,5 @@ if __name__ == '__main__':
 
     upgraded_lightshow_event = Upgraded_Lightshows()
     upgraded_lightshow_event.from_file('coding_challenge_input.txt')
+    print(upgraded_lightshow_event.__repr__())
     print(upgraded_lightshow_event.lights_on())
