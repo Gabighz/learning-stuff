@@ -24,7 +24,7 @@ class Lightshows:
         '''
         for row in range(row_start, row_end + 1):
             for col in range(col_start, col_end + 1):
-                self.lightshows[row][col] = 1 if self.lightshows[row][col] == 0 else 0
+                self.lightshows[row][col] = not self.lightshows[row][col]
 
     def lights_on(self) -> int:
         '''
