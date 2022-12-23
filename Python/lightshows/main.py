@@ -143,5 +143,4 @@ if __name__ == '__main__':
 
     upgraded_lightshow_event = Upgraded_Lightshows()
     upgraded_lightshow_event.from_file('coding_challenge_input.txt')
-    print(upgraded_lightshow_event.__repr__())
     print(upgraded_lightshow_event.lights_on())
