@@ -30,13 +30,7 @@ class Lightshows:
         '''
         This function prints the number of lights that are currently turned on in the lightshows attribute of the object.
         '''
-        sum_lights_on = 0
-
-        for row in self.lightshows:
-            for val in row:
-                sum_lights_on += val
-
-        return sum_lights_on
+        return sum(map(sum, self.lightshows))
 
     def _process_format(self, instruction: list) -> list:
         '''
