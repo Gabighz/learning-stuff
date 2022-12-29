@@ -18,17 +18,33 @@ def timer(fn):
 
     return inner
 
-@timer
-def fib(n):
-    return recursive_fib(n)
+def memoize(fn):
+    'An alternative to functools cache'
+    cache = dict()
+
+    def inner(n):
+        if n not in cache:
+            cache[n] = fn(n)
+        return cache[n]
+
+    return inner
 
 def recursive_fib(n):
-    '''Return the nth value from the Fiboanacci sequence'''
     if n < 2:
         return n
     return recursive_fib(n - 1) + recursive_fib(n - 2)
 
+@timer
+def fib(n):
+    return recursive_fib(n)
+
+@memoize
+@timer
+def memoized_fib(n):
+    return recursive_fib(n)
+
 fib(20)
+memoized_fib(20)
 
 @timer
 def iterative_fib(n):
@@ -46,9 +62,9 @@ iterative_fib(20)
 def fib_reduce(n):
     from functools import reduce
 
-    initial = (1, 0)
+    initial = (0, 1)
     calculate_to = range(n)
-    fib_n = reduce(lambda prev, n: (prev[0] + prev[1], prev[0]), calculate_to, initial)
+    fib_n = reduce(lambda prev, _: (prev[1], prev[0] + prev[1]), calculate_to, initial)
     return fib_n[0]
 
 fib_reduce(20)
