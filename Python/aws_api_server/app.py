@@ -10,8 +10,8 @@ from .helpers import (
 )
 import datetime
 
-#sqs_listener_thread = threading.Thread(target = sqs_to_sns, name = "SQS Listener", daemon = True)
-#sqs_listener_thread.start()
+sqs_listener_thread = threading.Thread(target = sqs_to_sns, name = "SQS Listener", daemon = True)
+sqs_listener_thread.start()
 
 app = flask.Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = constants.CONF
