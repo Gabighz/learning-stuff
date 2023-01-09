@@ -1,1 +1,1 @@
-Done as part of the Udemy course HashiCorp Certified: Terraform Associate 2022 by Zeal Vora
+Made as part of the [HashiCorp Certified: Terraform Associate 2023](https://www.udemy.com/course/terraform-beginner-to-advanced/) course
