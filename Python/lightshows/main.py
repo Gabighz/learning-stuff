@@ -7,7 +7,28 @@ class Lightshows:
     def __init__(self):
         self.lightshows = [[0 for _ in range(self.COLS)] for _ in range(self.ROWS)]
 
-    def turn(self, row_start: int, row_end: int, col_start: int, col_end: int, val: int) -> None:
+    def lights_on(self) -> int:
+        '''
+        This function prints the number of lights that are currently turned on in the lightshows attribute of the object.
+        '''
+        return sum(map(sum, self.lightshows))
+
+    def from_file(self, filepath: str) -> None:
+        '''
+        Feed instructions from a file.
+        '''
+        with open(filepath, mode='r') as f:
+            instructions = f.readlines()
+
+        self._process_instructions(instructions)
+
+    def from_instruction(self, instruction: str) -> None:
+        '''
+        Feed instruction(s) directly from the argument of this method's call.
+        '''
+        self._process_instructions([instruction])
+
+    def _turn(self, row_start: int, row_end: int, col_start: int, col_end: int, val: int) -> None:
         '''
         This function turns the light off or on at each position in the specified range of rows and 
         columns in the lightshows attribute of the object to the specified value. 
@@ -17,7 +38,7 @@ class Lightshows:
                 if self.lightshows[row][col] != val:
                     self.lightshows[row][col] = val
 
-    def toggle(self, row_start: int, row_end: int, col_start: int, col_end: int) -> None:
+    def _toggle(self, row_start: int, row_end: int, col_start: int, col_end: int) -> None:
         '''
         This function toggles the light at each position in the specified range of rows and columns in the 
         lightshows attribute of the object. 
@@ -25,12 +46,6 @@ class Lightshows:
         for row in range(row_start, row_end + 1):
             for col in range(col_start, col_end + 1):
                 self.lightshows[row][col] = not self.lightshows[row][col]
-
-    def lights_on(self) -> int:
-        '''
-        This function prints the number of lights that are currently turned on in the lightshows attribute of the object.
-        '''
-        return sum(map(sum, self.lightshows))
 
     def _process_format(self, instruction: list) -> list:
         '''
@@ -58,22 +73,7 @@ class Lightshows:
 
         return [command, row_start, row_end, col_start, col_end]
 
-    def from_file(self, filepath: str) -> None:
-        '''
-        Feed instructions from a file.
-        '''
-        with open(filepath, mode='r') as f:
-            instructions = f.readlines()
-
-        self.process_instructions(instructions)
-
-    def from_instruction(self, instruction: str) -> None:
-        '''
-        Feed instruction(s) directly from the argument of this method's call.
-        '''
-        self.process_instructions([instruction])
-
-    def process_instructions(self, instructions: list) -> None:
+    def _process_instructions(self, instructions: list) -> None:
         '''
         The function calls the appropriate method (turn or toggle) with the extracted start and end coordinates 
         and the value to turn the lights to (for the turn method).
@@ -85,14 +85,14 @@ class Lightshows:
             command, row_start, row_end, col_start, col_end = processed_instr[0], *processed_instr[1:]
 
             if command == 'turnon':
-                self.turn(row_start, row_end, col_start, col_end, 1)
+                self._turn(row_start, row_end, col_start, col_end, 1)
             elif command == 'turnoff':
-                self.turn(row_start, row_end, col_start, col_end, 0)
+                self._turn(row_start, row_end, col_start, col_end, 0)
             elif command == 'toggle':
-                self.toggle(row_start, row_end, col_start, col_end)
+                self._toggle(row_start, row_end, col_start, col_end)
 
     def __str__(self):
-        return f'In this {self.ROWS}x{self.COLS} grid of lights, there are {self.lights_on()} lights on.'
+        return f'Lightshows({self.ROWS}x{self.COLS} grid of lights, where {self.lights_on()} lights are on)'
 
 class Upgraded_Lightshows(Lightshows):
     ''' We can now control brightness. Cool! '''
@@ -101,7 +101,7 @@ class Upgraded_Lightshows(Lightshows):
         '''This function prints the sum of brightness units in the lightshows attribute of the object.'''
         return super().lights_on()
 
-    def turn(self, row_start: int, row_end: int, col_start: int, col_end: int, val: int) -> None:
+    def _turn(self, row_start: int, row_end: int, col_start: int, col_end: int, val: int) -> None:
         '''
         This function decreases or increases brightness by 1 unit at each position in the specified range of rows and 
         columns in the lightshows attribute of the object to the specified value.
@@ -115,7 +115,7 @@ class Upgraded_Lightshows(Lightshows):
                 else:
                     self.lightshows[row][col] -= 1 if self.lightshows[row][col] > 0 else 0
 
-    def toggle(self, row_start: int, row_end: int, col_start: int, col_end: int) -> None:
+    def _toggle(self, row_start: int, row_end: int, col_start: int, col_end: int) -> None:
         '''
         This function increases brightness by 2 units at each position in the specified range of rows and columns in the 
         lightshows attribute of the object.
@@ -127,7 +127,7 @@ class Upgraded_Lightshows(Lightshows):
                 self.lightshows[row][col] += 2
 
     def __str__(self):
-        return f'In this {self.ROWS}x{self.COLS} grid of lights, there are {self.lights_on()} brightness units.'
+        return f'Upgraded_Lightshows({self.ROWS}x{self.COLS} grid of lights, where {self.lights_on()} there are brightness units)'
 
 
 if __name__ == '__main__':
