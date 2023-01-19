@@ -28,7 +28,7 @@ class Lightshows:
 
     def _file_reader(self, filepath: str) -> str:
         '''
-        Lazily read line by line.
+        Lazily read line by line by delegating yielding to another iterator (the file obj returned by open(filepath).__enter__()).
         '''
         with open(filepath, mode='r') as f:
             yield from f.readlines()
