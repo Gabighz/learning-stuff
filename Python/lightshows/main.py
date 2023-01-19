@@ -17,16 +17,21 @@ class Lightshows:
         '''
         Feed instructions from a file.
         '''
-        with open(filepath, mode='r') as f:
-            instructions = f.readlines()
-
-        self._process_instructions(instructions)
+        for instruction in self._file_reader(filepath):
+            self._process_instruction(instruction)
 
     def from_instruction(self, instruction: str) -> None:
         '''
         Feed instruction(s) directly from the argument of this method's call.
         '''
-        self._process_instructions([instruction])
+        self._process_instruction(instruction)
+
+    def _file_reader(self, filepath: str) -> str:
+        '''
+        Lazily read line by line.
+        '''
+        with open(filepath, mode='r') as f:
+            yield from f.readlines()
 
     def _turn(self, row_start: int, row_end: int, col_start: int, col_end: int, val: int) -> None:
         '''
@@ -47,13 +52,15 @@ class Lightshows:
             for col in range(col_start, col_end + 1):
                 self.lightshows[row][col] = not self.lightshows[row][col]
 
-    def _process_format(self, instruction: list) -> list:
+    def _process_format(self, instruction: str) -> list:
         '''
-        This function takes in a list instruction and processes it to extract the command and start and end coordinates,
+        This function takes in an instruction and processes it to extract the command and start and end coordinates,
         where a certain format is implicit.
         '''
         if not instruction:
             raise ValueError("Empty instruction line!")
+
+        instruction = instruction.strip().split()
 
         if len(instruction) < 4 or len(instruction) > 5:
             raise ValueError("Invalid format!")
@@ -73,23 +80,21 @@ class Lightshows:
 
         return [command, row_start, row_end, col_start, col_end]
 
-    def _process_instructions(self, instructions: list) -> None:
+    def _process_instruction(self, instruction: str) -> None:
         '''
         The function calls the appropriate method (turn or toggle) with the extracted start and end coordinates 
         and the value to turn the lights to (for the turn method).
         '''
-        instructions = [instruction.strip().split() for instruction in instructions]
-        
-        for instruction in instructions:
-            processed_instr = self._process_format(instruction)
-            command, row_start, row_end, col_start, col_end = processed_instr[0], *processed_instr[1:]
 
-            if command == 'turnon':
-                self._turn(row_start, row_end, col_start, col_end, 1)
-            elif command == 'turnoff':
-                self._turn(row_start, row_end, col_start, col_end, 0)
-            elif command == 'toggle':
-                self._toggle(row_start, row_end, col_start, col_end)
+        processed_instr = self._process_format(instruction)
+        command, row_start, row_end, col_start, col_end = processed_instr[0], *processed_instr[1:]
+
+        if command == 'turnon':
+            self._turn(row_start, row_end, col_start, col_end, 1)
+        elif command == 'turnoff':
+            self._turn(row_start, row_end, col_start, col_end, 0)
+        elif command == 'toggle':
+            self._toggle(row_start, row_end, col_start, col_end)
 
     def __str__(self):
         return f'Lightshows({self.ROWS}x{self.COLS} grid of lights, where {self.lights_on()} lights are on)'
