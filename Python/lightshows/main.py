@@ -3,6 +3,7 @@
 class Lightshows:
     ROWS = 1000
     COLS = 1000
+    POSSIBLE_COMMANDS = frozenset({'turnon', 'turnoff', 'toggle'})
 
     def __init__(self):
         self.lightshows = [[0 for _ in range(self.COLS)] for _ in range(self.ROWS)]
@@ -68,7 +69,7 @@ class Lightshows:
         is_turn = instruction[1].isalpha()
 
         command = ''.join([instr for instr in instruction[:2]]) if is_turn else instruction[0]
-        if command not in ('turnon', 'turnoff', 'toggle'):
+        if command not in self.POSSIBLE_COMMANDS:
             raise ValueError("Invalid input format. Possible commands are 'turn on', 'turn off', and 'toggle'.")
 
         start, end = (instruction[2], instruction[4]) if is_turn else (instruction[1], instruction[3])
