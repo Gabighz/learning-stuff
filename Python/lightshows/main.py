@@ -1,4 +1,5 @@
 #!usr/bin/python3.11
+from collections.abc import Generator
 
 class Lightshows:
     ROWS = 1000
@@ -27,7 +28,7 @@ class Lightshows:
         '''
         self._process_instruction(instruction)
 
-    def _file_reader(self, filepath: str) -> str:
+    def _file_reader(self, filepath: str) -> Generator[str]:
         '''
         Lazily read line by line by delegating yielding to another iterator (the file obj returned by open(filepath).__enter__()).
         '''
@@ -98,7 +99,7 @@ class Lightshows:
             self._toggle(row_start, row_end, col_start, col_end)
 
     def __str__(self):
-        return f'Lightshows({self.ROWS}x{self.COLS} grid of lights, where {self.lights_on()} lights are on)'
+        return f'{self.__class__.__name__}({self.ROWS}x{self.COLS} grid of lights, where {self.lights_on()} lights are on)'
 
 class Upgraded_Lightshows(Lightshows):
     ''' We can now control brightness. Cool! '''
@@ -133,7 +134,7 @@ class Upgraded_Lightshows(Lightshows):
                 self.lightshows[row][col] += 2
 
     def __str__(self):
-        return f'Upgraded_Lightshows({self.ROWS}x{self.COLS} grid of lights, where {self.lights_on()} there are brightness units)'
+        return f'{self.__class__.__name__}({self.ROWS}x{self.COLS} grid of lights, where {self.lights_on()} there are brightness units)'
 
 
 if __name__ == '__main__':
