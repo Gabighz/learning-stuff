@@ -13,7 +13,7 @@ class AppException(Enum):
     NotAList = 201, ValueError, 'Value must be a list'
 
     def __new__(cls, ex_code, ex_class, ex_message):
-        member = object.__new__(cls)
+        member = super().__new__(cls)
 
         member._value = ex_code
         member.exception = ex_class

@@ -1,4 +1,5 @@
-# Hypothetical scenario where we want to validate data before it is serialized into a database
+# Hypothetical scenario where we want to validate data before it is serialized into a database.
+# NOTE: Descriptors essentially modify the behavior of the dot (.) operator
 
 class BaseValidator:
 
