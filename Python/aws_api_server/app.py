@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import flask, random, time, threading
+import flask, random, time, threading, logging
 from . import constants
 from flask import request, Response, jsonify
 from ec2_metadata import ec2_metadata
@@ -30,8 +30,8 @@ query = '''create table if not exists image(
 try:
     db.engine.execute(query)
 except:
-    # Useful if we just want to debug the SNS/SQS functionality
-    print('!!!!\nNo DB connection.\n!!!!')
+    # Useful for testing SNS/SQS functionality in a dev env
+    logging.critical('!!!!\nNo DB connection.\n!!!!')
 
 # Model Class for Postgres integration
 class Image(db.Model):
@@ -62,9 +62,9 @@ def image_upload():
     try:
         db.session.add(entry)
         db.session.commit()
-        print(upload_file_to_s3(request.files['file']))
+        logging.info(upload_file_to_s3(request.files['file']))
     except:
-        pass
+        logging.error('!!!!\nUnable to upload file to S3.\n!!!!')
 
     sqs_response = sqs.send_message(
         QueueUrl = constants.QUEUE_URL,
