@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "a428e97a-d79e-44f8-af30-5d9d242cd2c8",
+		"name": "two_flasks_communicating",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26304624"
+	},
+	"item": [
+		{
+			"name": "Send user data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"users\": \r\n    [\r\n        {\r\n            \"name\": \"John\",\r\n            \"age\": 20\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ADDRESS}}/users",
+					"host": [
+						"{{ADDRESS}}"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ADDRESS",
+			"value": "localhost:5000",
+			"type": "string"
+		}
+	]
+}

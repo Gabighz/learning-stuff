@@ -6,3 +6,6 @@ node_modules/
 bin/
 __pycache__
 *.class/
+lib/
+lib64
+include/
