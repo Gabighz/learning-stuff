@@ -21,3 +21,5 @@ To consume it on e.g. an EC2 instance:
 To deploy the SQS-to-SNS listener Lambda:
 
     sam deploy --guided -t sam_template.yml
+
+TO BE IMPROVED

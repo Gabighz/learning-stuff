@@ -18,6 +18,4 @@ As an example, this is how a sell order would be represented:
 }
 ```
 
-To be converted into a REST API server with Flask. Should be able to CRUD orders and run as microservices (or just as a containerized app, not sure yet).
-
-To support GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS
+(WIP) For the sake of learning variety, converted this into a Spring Boot app here: https://github.com/Gabighz/learning-stuff/tree/master/Java/SimpleExchange 
