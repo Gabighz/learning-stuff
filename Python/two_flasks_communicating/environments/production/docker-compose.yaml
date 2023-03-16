@@ -1,0 +1,18 @@
+version: '3'
+services:
+  needs_the_validator:
+    build:
+      context: ../../
+      dockerfile: needs_the_validator/Dockerfile
+    environment:
+      - APP_NAME=needs_the_validator
+    ports:
+      - "5000:5000"
+  validator:
+    build:
+      context: ../../
+      dockerfile: validator/Dockerfile
+    environment:
+      - APP_NAME=validator
+    ports:
+      - "5001:5001"

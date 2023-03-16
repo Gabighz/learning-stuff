@@ -8,12 +8,31 @@
 	"item": [
 		{
 			"name": "Send user data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"age\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Number of valid users' data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.lengthOf('2');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"users\": \r\n    [\r\n        {\r\n            \"name\": \"John\",\r\n            \"age\": 20\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"users\":\r\n    [\r\n        {\r\n            \"name\": \"John\",\r\n            \"age\": 20\r\n        },\r\n        {\r\n            \"name\": \"John\",\r\n            \"age\": 21\r\n        },\r\n        {\r\n            \"name\": \"AB\",\r\n            \"age\": 23\r\n        },\r\n        {\r\n            \"name\": \"John Jr.\",\r\n            \"age\": \"10\"\r\n        },\r\n        {\r\n            \"name\": \"A0\",\r\n            \"age\": \"10\"\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
