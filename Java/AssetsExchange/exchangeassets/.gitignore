@@ -1,15 +1,3 @@
-.DS_Store
-Cargo.lock
-target/
-node_modules/
-.vscode/
-bin/
-__pycache__
-*.class/
-lib/
-lib64
-include/
-pyvenv.cfg
 HELP.md
 .gradle
 build/
