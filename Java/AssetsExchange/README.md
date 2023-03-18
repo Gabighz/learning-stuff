@@ -2,7 +2,7 @@
 
 ### Work In Progress
 
-Intended to simulate a very simple assets exchange platform, where clients are able to make Buy or Sell orders and the program would match these orders. Made with a microservices architecture in mind 
+Intended to simulate a very simple assets exchange platform, where clients are able to make Buy or Sell orders and the app would match these orders. Made with a microservices architecture in mind 
 
 As an example, this is how a sell order would be represented:
 
@@ -24,11 +24,7 @@ Specifically, a REST API server that should be able to CRUD orders. Each such op
 
 To support GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS
 
-Technologies used
+Technologies used / to be used
 
-- **For the app itself:** Java 19, Spring boot, Hibernate, (multi-threaded?) postgresql, and Kafka as a queue to address possible congestion.
+- **For the app itself:** Java 19, Spring, postgresql, and Kafka as a queue to address possible congestion.
 - **For the infrastructure:** should use Docker, docker-compose, Kubernetes, Terraform for AWS, Travis or Jenkins.
-
-Personal notes:
-
-- Use Streams and Optional wherever possible since they are v cool
