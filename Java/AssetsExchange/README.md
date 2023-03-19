@@ -1,4 +1,4 @@
-# Order Matching System / Assets Exchange
+# Assets Exchange Platform
 
 ## Overview
 
