@@ -44,6 +44,8 @@ Planned integrations:
 ### Planned Architecture for the very near future
 ![](assetsexchange.png)
 
+NOTE: To add class diagrams as well.
+
 ## Features to be added:
 In order of estimated difficulty and order of implementation:
 - Order cancellation. In other words, a client should be able to delete a submitted order.
