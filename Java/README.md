@@ -1,3 +1,3 @@
 `OldUniversityStuff` includes mini-projects or assignments as part of University modules
 
-The rest is made as part of:
+`AssetsExchange` is a newer and more interesting project using Java 19 and Spring.

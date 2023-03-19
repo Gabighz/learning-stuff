@@ -1,31 +1,45 @@
-A hypothetical real-world microservices app where there's:
+# Two flasks communicating
 
-- needs_the_validator is a more user-facing ervice that receives user data, receives a reply from validator if the data is ok, then does stuff
+This is a simple example of a microservices architecture using two Flask applications:
 
-- validator is a service that must check if the user's information fits into some very simple criteria, specifically:
-    - name > 3 and name < 30
-    - all characters in name must be alphabetic
-    - age > 18
-    - age must be of type int
+1. **needs_the_validator**: A user-facing service that receives user data, validates it using the `validator` service, and could perform additional tasks upon successful validation.
+2. **validator**: A service that validates user data based on simple criteria:
+- Name length: between 3 and 30 characters
+- Name: only alphabetic characters allowed
+- Age: must be an integer
+- Age: must be greater than 18
 
-Start it up with:
+## Getting Started
+### Prerequisites
+- Docker
+- Docker Compose (optional, but highly preferred)
+
+### Running the Application
+You can run the application using Docker Compose or Docker with shell scripts.
+
+#### Using Docker Compose
+Run the following command for the production environment:
 
     sudo sh ./docker-compose-build-and-run.sh production
 
-or:
+Or for the development environment:
 
     sudo sh ./docker-compose-build-and-run.sh development
 
-Alternatively, without docker-compose:
+#### Without Docker Compose
+Make the shell script executable and run it:
 
     chmod +x build-and-run.sh
     ./build-and-run.sh
 
-The two_flasks_communicating.postman_collection.json file can be used for automated testing using Postman.
+## Testing
+The two_flasks_communicating.postman_collection.json file can be used to perform automated testing with Postman.
 
-To improve with: 
+## Future Improvements
 
-- Given that the workload on the validator might get high, look to improve it with a scalability solution, specifically Docker Swarm given that its lightweight nature makes it appropriate for this small app.
-- Better handle the scenario where the payload received is big.
+- Implement a scalability solution such as Docker Swarm for handling high workloads on the validator service. Docker Swarm, given its lightweight nature, makes it appropriate for this small app.
+- Optimize handling of large payloads within the application.
+    - Currently, this is attempted with multi-threading, generators, and streaming.
 
-TO DO: FastAPI version at: <a link\>
+## Related Projects
+FastAPI version (coming soon): `<link>`
