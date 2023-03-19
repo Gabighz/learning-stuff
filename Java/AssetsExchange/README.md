@@ -29,13 +29,23 @@ Currently, the application supports GET requests for retrieving all orders and P
 ## Technologies
 
 Technologies that have been used so far:
-- Java 19, Spring Boot
+
+- Java 19, Spring Boot, Gradle, Groovy, Spock
 
 Planned integrations:
+
 - Redis as a data store for unfulfilled or partially filled orders.
 - Kafka as a message queue to address possible congestion. It should sit between the order receiving service and the order processing service (i.e. Trading Engine). This would decouple these services allowing them to scale independently, provide fault tolerance by ensuring that messages are not lost in case of failures in the processing service and allow it to catch up with a backlog of orders in case of congestion.
 - PostgreSQL to store transaction history.
 - Docker, Kubernetes, Terraform for AWS, a CI/CD config probably for Jenkins.
+
+## Usage
+The following API endpoints are available on the current implementation:
+
+- `/orders` (GET): 
+    - Get all orders.
+- `/orders` (POST): 
+    - Submit an order.
 
 ## Architecture
 ### Current state
@@ -48,6 +58,7 @@ NOTE: To add class diagrams as well.
 
 ## Features to be added:
 In order of estimated difficulty and order of implementation:
+
 - Order cancellation. In other words, a client should be able to delete a submitted order.
 - Support different type of assets. Each asset should have a ticker symbol and available quantity.
 - Handle different types of orders, such as market orders, limit orders, and stop orders.

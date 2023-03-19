@@ -57,11 +57,19 @@ Deploy the Lambda function using the AWS SAM CLI:
 ## Usage
 The following API endpoints are available:
 
-- /api/ec2-metadata: Returns the EC2 instance's region and availability zone.
-- /images/upload: Uploads an image to S3 and stores its metadata in RDS.
-- /images/delete: Deletes an image from S3 and removes its metadata from RDS.
-- /images/get-metadata: Retrieves metadata for all images stored in RDS.
-- /images/download: Downloads an image from S3.
-- /images/random-metadata: Retrieves metadata for a randomly-selected image from RDS.
-- /notifications/subscriptions: Subscribes or unsubscribes an email address to/from SNS notifications.
-- /notifications/send: Invokes a Lambda function that processes SQS messages and sends them to an SNS topic.
+- `/api/ec2-metadata`: 
+    - Returns the EC2 instance's region and availability zone.
+- `/images/upload`: 
+    - Uploads an image to S3 and stores its metadata in RDS.
+- `/images/delete`: 
+    - Deletes an image from S3 and removes its metadata from RDS.
+- `/images/get-metadata`: 
+    - Retrieves metadata for all images stored in RDS.
+- `/images/download`: 
+    - Downloads an image from S3.
+- `/images/random-metadata`: 
+    - Retrieves metadata for a randomly-selected image from RDS.
+- `/notifications/subscriptions`: 
+    - Subscribes or unsubscribes an email address to/from SNS notifications.
+- `/notifications/send`:
+    - Invokes a Lambda function that processes SQS messages and sends them to an SNS topic.
