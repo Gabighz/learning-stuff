@@ -97,7 +97,9 @@ public class Order implements Comparable<Order>{
     public void updateStatus() {
         if (this.getRemainingContracts() == 0) {
             this.status.set(OrderStatus.Fulfilled);
-        } else this.status.set(OrderStatus.PartiallyFilled);
+        } else if (this.getRemainingContracts() < this.getNumContracts()) {
+                this.status.set(OrderStatus.PartiallyFilled);
+        }
     }
 
     public void updateRemainingContracts(int newRemainingContracts) {
@@ -123,5 +125,3 @@ public class Order implements Comparable<Order>{
                 '}';
     }
 }
-    
-    

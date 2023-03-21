@@ -12,7 +12,7 @@ public interface OrderStore {
 
 @Component
 class DefaultOrderStore implements OrderStore {
-    // NOTE: To be replaced with a data store, such as Redis. Only unfulfilled or partially filled Orders should be stored there.
+    // NOTE: To be replaced with a data store, such as Redis. Only unfulfilled or partially filled Orders should be stored here.
     private final ConcurrentSkipListSet<Order> orders = new ConcurrentSkipListSet<>();
 
     @Override

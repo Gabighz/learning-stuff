@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
+
 @RestController
 public class TradingEngine {
 
-    private final OrderStore orderStore;
+    final OrderStore orderStore;
 
     @Autowired
     TradingEngine(OrderStore orderStore) {
@@ -17,8 +19,8 @@ public class TradingEngine {
     }
 
     @GetMapping("/orders")
-    OrderStore getOrdersReceived() {
-        return orderStore;
+    Collection<Order> getOrdersReceived() {
+        return orderStore.getOrders();
     }
 
     @PostMapping("/orders")

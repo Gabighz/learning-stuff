@@ -1,6 +1,7 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.1.0-M1'
+	id 'groovy'
+	id 'org.springframework.boot' version '3.0.4'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'org.hibernate.orm' version '6.1.7.Final'
 }
@@ -21,6 +22,13 @@ repositories {
 }
 
 dependencies {
+	// mandatory dependencies for using Spock
+	implementation platform('org.apache.groovy:groovy-bom:4.0.5')
+	testImplementation platform("org.spockframework:spock-bom:2.3-groovy-4.0")
+	testImplementation "org.spockframework:spock-core"
+	testImplementation 'org.spockframework:spock-spring:2.3-groovy-4.0'
+	testImplementation 'cglib:cglib-nodep:3.3.0'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.jetbrains:annotations:23.0.0'
@@ -32,6 +40,12 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+processResources {
+	filesMatching("**/application.properties") {
+		expand( project.properties )
+	}
 }
 
 hibernate {

@@ -18,6 +18,6 @@ public class OrderMatches {
         matches.add(newMatch);
     }
 
-    private record Match(String id, int numContracts, int executionPrice) {
+    public record Match(String id, int numContracts, int executionPrice) {
     }
 }
