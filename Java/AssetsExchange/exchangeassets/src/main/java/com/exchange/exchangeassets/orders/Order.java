@@ -1,9 +1,9 @@
-package com.exchange.exchangeassets;
+package com.exchange.exchangeassets.orders;
 
-import com.exchange.exchangeassets.Enums.Currency;
-import com.exchange.exchangeassets.Enums.OrderSide;
-import com.exchange.exchangeassets.Enums.OrderStatus;
-import com.exchange.exchangeassets.Enums.OrderType;
+import com.exchange.exchangeassets.orders.Enums.Currency;
+import com.exchange.exchangeassets.orders.Enums.OrderSide;
+import com.exchange.exchangeassets.orders.Enums.OrderStatus;
+import com.exchange.exchangeassets.orders.Enums.OrderType;
 import jakarta.persistence.Entity;
 import org.jetbrains.annotations.NotNull;
 

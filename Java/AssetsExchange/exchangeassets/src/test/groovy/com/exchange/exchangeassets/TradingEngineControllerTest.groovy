@@ -1,8 +1,9 @@
 package com.exchange.exchangeassets
 
-import com.exchange.exchangeassets.Enums.Currency
-import com.exchange.exchangeassets.Enums.OrderSide
-import com.exchange.exchangeassets.Enums.OrderType
+import com.exchange.exchangeassets.orders.Enums.Currency
+import com.exchange.exchangeassets.orders.Enums.OrderSide
+import com.exchange.exchangeassets.orders.Enums.OrderType
+import com.exchange.exchangeassets.orders.Order
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.test.context.ContextConfiguration
@@ -19,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = ExchangeassetsApplication.class)
-class TradingEngineTest extends Specification {
+class TradingEngineControllerTest extends Specification {
 
     @Autowired
     private MockMvc mockMvc
@@ -36,8 +37,6 @@ class TradingEngineTest extends Specification {
                     "limitPrice": 100,
                     "currency": "USD"
                 }'''))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath('matches').isArray())
 
         expect:
         mockMvc.perform(get("/orders"))
@@ -61,7 +60,7 @@ class TradingEngineTest extends Specification {
                     "limitPrice": 100,
                     "currency": "USD"
                 }'''))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath('matches').isArray())
     }
 }

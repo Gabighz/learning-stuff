@@ -1,17 +1,12 @@
-package com.exchange.exchangeassets;
+package com.exchange.exchangeassets.orders;
 
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-public interface OrderStore {
-    Collection<Order> getOrders();
-    void addOrder(Order order);
-}
-
 @Component
-class DefaultOrderStore implements OrderStore {
+public class DefaultOrderStore implements OrderStore {
     // NOTE: To be replaced with a data store, such as Redis. Only unfulfilled or partially filled Orders should be stored here.
     private final ConcurrentSkipListSet<Order> orders = new ConcurrentSkipListSet<>();
 

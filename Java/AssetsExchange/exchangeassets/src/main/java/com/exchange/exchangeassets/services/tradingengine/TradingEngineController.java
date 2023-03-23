@@ -1,20 +1,22 @@
-package com.exchange.exchangeassets;
+package com.exchange.exchangeassets.services.tradingengine;
 
+import com.exchange.exchangeassets.orders.Order;
+import com.exchange.exchangeassets.orders.OrderMatcher;
+import com.exchange.exchangeassets.orders.OrderMatches;
+import com.exchange.exchangeassets.orders.OrderStore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
 @RestController
-public class TradingEngine {
+public class TradingEngineController {
 
     final OrderStore orderStore;
 
     @Autowired
-    TradingEngine(OrderStore orderStore) {
+    TradingEngineController(OrderStore orderStore) {
         this.orderStore = orderStore;
     }
 
@@ -24,6 +26,7 @@ public class TradingEngine {
     }
 
     @PostMapping("/orders")
+    @ResponseStatus(HttpStatus.CREATED)
     OrderMatches submitOrder(@RequestBody Order newOrder) {
         OrderMatcher.matchOrders(orderStore, newOrder);
 

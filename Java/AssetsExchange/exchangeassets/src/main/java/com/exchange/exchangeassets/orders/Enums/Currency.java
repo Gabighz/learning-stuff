@@ -1,4 +1,4 @@
-package com.exchange.exchangeassets.Enums;
+package com.exchange.exchangeassets.orders.Enums;
 
 public enum Currency {
     USD,

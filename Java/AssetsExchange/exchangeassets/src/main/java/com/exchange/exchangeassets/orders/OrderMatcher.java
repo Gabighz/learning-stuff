@@ -1,4 +1,4 @@
-package com.exchange.exchangeassets;
+package com.exchange.exchangeassets.orders;
 
 public class OrderMatcher {
 

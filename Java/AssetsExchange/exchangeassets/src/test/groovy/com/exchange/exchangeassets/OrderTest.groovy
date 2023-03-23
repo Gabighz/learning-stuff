@@ -1,9 +1,10 @@
 package com.exchange.exchangeassets
 
-import com.exchange.exchangeassets.Enums.Currency
-import com.exchange.exchangeassets.Enums.OrderSide
-import com.exchange.exchangeassets.Enums.OrderStatus
-import com.exchange.exchangeassets.Enums.OrderType
+import com.exchange.exchangeassets.orders.Enums.Currency
+import com.exchange.exchangeassets.orders.Enums.OrderSide
+import com.exchange.exchangeassets.orders.Enums.OrderStatus
+import com.exchange.exchangeassets.orders.Enums.OrderType
+import com.exchange.exchangeassets.orders.Order
 import spock.lang.Specification
 
 class OrderTest extends Specification {
