@@ -5,3 +5,4 @@ pluginManagement {
 	}
 }
 rootProject.name = 'exchangeassets'
+include 'common', 'eureka-server', 'trading-engine', 'transaction-history'

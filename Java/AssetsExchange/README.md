@@ -6,7 +6,22 @@
 
 A simple assets exchange platform designed with a microservices architecture in mind. Clients can create buy and sell orders, and the application matches these orders.
 
-As an example, this is how a sell order would be represented:
+The RESTful API server enables CRUD operations on orders and related resources. Clients should be able to use the following HTTP verbs: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS.
+
+Currently, the application supports GET requests for retrieving all orders and POST requests for submitting new orders. Also, the current architecture has not yet been fully decomposed into microservices.
+
+As an example, this is how a sell order that would be sent by a client look like in the body of a POST:
+```
+{
+    "side": "SELL",
+    "type": "LIMIT",
+    "numContracts": 2,
+    "limitPrice": 10,
+    "currency": "USD"
+}
+```
+
+And this is how it might be represented internally (i.e. by the `Order` class in the `common` package):
 
 ```
 {
@@ -21,10 +36,6 @@ As an example, this is how a sell order would be represented:
     ]
 }
 ```
-
-The RESTful API server enables CRUD operations on orders and related resources. Clients should be able to use the following HTTP verbs: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS.
-
-Currently, the application supports GET requests for retrieving all orders and POST requests for submitting new orders. Also, the current architecture has not yet been decomposed into microservices.
 
 ## Technologies
 
@@ -48,6 +59,10 @@ The following API endpoints are available on the current implementation:
     - Get all orders.
 - `/orders` (POST): 
     - Submit an order.
+- `/orders/{id}` (DELETE):
+    - Deletes a not-fulfilled order
+
+For a more formal description, the OpenAPI 3.1 specification at exchangeassets/trading-engine/openapi.yml can be used.
 
 ## Architecture
 ### Current state
