@@ -76,7 +76,6 @@ NOTE: To add class diagrams as well.
 ## Features to be added:
 In order of estimated difficulty and order of implementation:
 
-- Order cancellation. In other words, a client should be able to delete a submitted order.
 - Support different type of assets. Each asset should have a ticker symbol and available quantity.
 - Handle different types of orders, such as market orders, limit orders, and stop orders.
 - Create a user management system to handle user authentication, authorization, and user-related data such as portfolios and transaction history.
