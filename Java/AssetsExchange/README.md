@@ -62,7 +62,7 @@ The following API endpoints are available on the current implementation:
 - `/orders/{id}` (DELETE):
     - Deletes a not-fulfilled order
 
-For a more formal description, the OpenAPI 3.1 specification at exchangeassets/trading-engine/openapi.yml can be used.
+For a more formal description, the OpenAPI 3.0 specification at exchangeassets/trading-engine/openapi.yml can be used.
 
 ## Architecture
 ### Current state
