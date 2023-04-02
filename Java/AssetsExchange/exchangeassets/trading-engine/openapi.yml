@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.0
 info:
   title: Trading Engine API
   version: 1.0.0
@@ -25,7 +25,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/SubmittedOrder'
         required: true
       responses:
         '201':
@@ -33,7 +33,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/OrderSubmissionResponse'
   /orders/{id}:
     delete:
       summary: Delete a not-fulfilled order
@@ -72,6 +72,16 @@ components:
         status:
           type: string
           enum: [Unfulfilled, PartiallyFilled, Fulfilled]
+        matches:
+          type: object
+          properties:
+            matches:
+              type: array
+              items: {}
+        notFulfilled:
+          type: boolean
+        fulfilled:
+          type: boolean
       required:
         - id
         - side
@@ -81,3 +91,27 @@ components:
         - currency
         - remainingContracts
         - status
+    SubmittedOrder:
+      type: object
+      properties:
+        side:
+          type: string
+          enum: [BUY, SELL]
+        type:
+          type: string
+          enum: [LIMIT]
+        numContracts:
+          type: integer
+        limitPrice:
+          type: integer
+        currency:
+          type: string
+          enum: [USD, EUR, GBP, JPY]
+    OrderSubmissionResponse:
+      type: object
+      properties:
+        order_id:
+          type: string
+        matches:
+          type: array
+          items: {}
