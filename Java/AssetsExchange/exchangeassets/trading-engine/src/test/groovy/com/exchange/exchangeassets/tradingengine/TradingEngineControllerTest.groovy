@@ -31,7 +31,7 @@ class TradingEngineControllerTest extends Specification {
                     "numContracts": 10,
                     "limitPrice": 100,
                     "currency": "USD"
-                }''';
+                }'''
 
     @Unroll
     def "GetOrdersReceived"() {
@@ -67,7 +67,7 @@ class TradingEngineControllerTest extends Specification {
                 .andExpect(jsonPath('matches').isArray())
                 .andReturn()
 
-        String returnedJson = result.getResponse().getContentAsString();
+        String returnedJson = result.getResponse().getContentAsString()
         String orderId = JsonPath.read(returnedJson, '$.order_id')
 
         when:

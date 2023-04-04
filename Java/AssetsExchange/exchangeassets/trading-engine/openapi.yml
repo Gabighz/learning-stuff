@@ -73,11 +73,8 @@ components:
           type: string
           enum: [Unfulfilled, PartiallyFilled, Fulfilled]
         matches:
-          type: object
-          properties:
-            matches:
-              type: array
-              items: {}
+          type: array
+          items: {}
         notFulfilled:
           type: boolean
         fulfilled:

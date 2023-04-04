@@ -1,4 +1,4 @@
-package com.exchange.exchangeassets.services.eureka;
+package com.exchange.exchangeassets.eurekaserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

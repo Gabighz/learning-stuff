@@ -1,20 +1,24 @@
 package com.exchange.exchangeassets.common;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.util.Pair;
 
 public class OrderMatcher {
 
-    public static ArrayList<Order> matchOrders(OrderStore currentOrders, Order newOrder) {
+    public static MatchResult matchOrders(OrderStore currentOrders, Order newOrder) {
+        List<Pair<Integer, Integer>> filledContracts = new ArrayList<>();
 
-        return currentOrders.getOrders().stream()
+        List<Order> matchedOrders = currentOrders.getOrders().stream()
                 .filter(order -> order.canBeMatchedWith(newOrder))
-                .peek(order -> modifyOrders(order, newOrder))
-                .collect(Collectors.toCollection(ArrayList::new));
+                .peek(order -> filledContracts.add(modifyOrders(order, newOrder)))
+                .collect(Collectors.toList());
 
+        return new MatchResult(matchedOrders, filledContracts);
     }
 
-    public static void modifyOrders(Order order, Order newOrder){
+    public static Pair<Integer, Integer> modifyOrders(Order order, Order newOrder){
         int initialOrderRemaining = order.getRemainingContracts();
         int initialNewOrderRemaining = newOrder.getRemainingContracts();
 
@@ -27,6 +31,8 @@ public class OrderMatcher {
         order.updateMatches(newOrder);
         newOrder.updateMatches(order);
 
+        return Pair.of(initialNewOrderRemaining - newOrder.getRemainingContracts(),
+                initialOrderRemaining - order.getRemainingContracts());
     }
 
 }
