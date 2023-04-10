@@ -2,10 +2,9 @@ package com.exchange.exchangeassets.transactionhistory;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class },
+@SpringBootApplication(
         scanBasePackages = {
                 "com.exchange.exchangeassets.transactionhistory",
                 "com.exchange.exchangeassets.common"
