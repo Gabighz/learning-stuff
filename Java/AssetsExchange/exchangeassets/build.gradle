@@ -47,6 +47,7 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.cloud:spring-cloud-starter-config'
         implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'org.springframework.data:spring-data-commons'
 
         implementation platform("org.apache.groovy:groovy-bom:${groovyVersion}")
