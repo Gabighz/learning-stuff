@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: transaction-history
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/transactionhistory'
+    username: 'transaction_history_service'
+    password: 'hunter2'
+
+server:
+  port: 8081
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+logging:
+  level:
+    root: TRACE

@@ -4,7 +4,7 @@
 
 ### ! Work in Progress !
 
-A simple assets exchange platform designed with a microservices architecture in mind. Clients can create buy and sell orders, and the application matches these orders.
+A simple assets exchange platform designed with an event-driven microservices architecture in mind. Clients can create buy and sell orders, and the application matches these orders.
 
 The RESTful API server enables CRUD operations on orders and related resources. Clients should be able to use the following HTTP verbs: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS.
 
@@ -41,7 +41,7 @@ And this is how it might be represented internally (i.e. by the `Order` class in
 
 Technologies that have been used so far:
 
-- Java 19, Spring Boot, Gradle, Groovy, Spock
+- Java 19, Spring Boot + Data + Cloud, Gradle, Groovy, Spock, Eureka, Hibernate, PostgreSQL ([starter script here](https://github.com/Gabighz/learning-stuff/blob/master/Java/AssetsExchange/exchangeassets/transaction-history/src/main/resources/starter.sql))
 
 Planned integrations:
 
@@ -62,7 +62,7 @@ The following API endpoints are available on the current implementation:
 - `/orders/{id}` (DELETE):
     - Deletes a not-fulfilled order
 
-For a more formal description, the OpenAPI 3.0 specification at exchangeassets/trading-engine/openapi.yml can be used.
+For a more formal description, the OpenAPI 3.0 specification at [exchangeassets/trading-engine/openapi.yml](https://github.com/Gabighz/learning-stuff/blob/master/Java/AssetsExchange/exchangeassets/trading-engine/openapi.yml) can be used.
 
 ## Architecture
 ### Current state
