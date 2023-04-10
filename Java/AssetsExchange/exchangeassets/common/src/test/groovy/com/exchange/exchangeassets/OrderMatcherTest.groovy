@@ -1,10 +1,10 @@
 package com.exchange.exchangeassets
 
 import com.exchange.exchangeassets.common.DefaultOrderStore
-import com.exchange.exchangeassets.common.Enums.Currency
-import com.exchange.exchangeassets.common.Enums.OrderSide
-import com.exchange.exchangeassets.common.Enums.OrderStatus
-import com.exchange.exchangeassets.common.Enums.OrderType
+import com.exchange.exchangeassets.common.enums.Currency
+import com.exchange.exchangeassets.common.enums.OrderSide
+import com.exchange.exchangeassets.common.enums.OrderStatus
+import com.exchange.exchangeassets.common.enums.OrderType
 import com.exchange.exchangeassets.common.Order
 import com.exchange.exchangeassets.common.OrderMatcher
 import com.exchange.exchangeassets.common.OrderStore

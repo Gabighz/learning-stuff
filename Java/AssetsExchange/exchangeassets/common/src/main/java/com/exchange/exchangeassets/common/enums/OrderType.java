@@ -1,4 +1,4 @@
-package com.exchange.exchangeassets.common.Enums;
+package com.exchange.exchangeassets.common.enums;
 
 public enum OrderType {
     MARKET,

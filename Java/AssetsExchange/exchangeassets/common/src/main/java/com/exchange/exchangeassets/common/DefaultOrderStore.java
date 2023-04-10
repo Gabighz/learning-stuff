@@ -3,7 +3,6 @@ package com.exchange.exchangeassets.common;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentSkipListSet;
 

@@ -1,9 +1,9 @@
 package com.exchange.exchangeassets.tradingengine;
 
-import com.exchange.exchangeassets.common.MatchResult;
-import com.exchange.exchangeassets.common.Order;
-import com.exchange.exchangeassets.common.OrderMatcher;
-import com.exchange.exchangeassets.common.OrderStore;
+import com.exchange.exchangeassets.common.*;
+import com.exchange.exchangeassets.common.exceptions.InvalidTransactionException;
+import com.exchange.exchangeassets.common.transaction.Transaction;
+import com.exchange.exchangeassets.common.transaction.TransactionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +19,16 @@ public class TradingEngineController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TradingEngineController.class);
 
-    @Autowired
     TransactionHistoryClient transactionHistoryClient;
 
     @Autowired
     TradingEngineController(OrderStore orderStore) {
         this.orderStore = orderStore;
+    }
+
+    @Autowired
+    void setTransactionHistoryClient(TransactionHistoryClient transactionHistoryClient){
+        this.transactionHistoryClient = transactionHistoryClient;
     }
 
     @GetMapping("/orders")
@@ -42,7 +46,12 @@ public class TradingEngineController {
         }
 
         if (newOrder.isFulfilled() || matchResult.matchedOrders().stream().anyMatch(Order::isFulfilled)) {
-            processFulfilledOrders(newOrder, matchResult);
+            try {
+                processFulfilledOrders(newOrder, matchResult);
+            } catch (InvalidTransactionException e) {
+                LOGGER.error("An invalid transaction has been attempted! " + e.getMessage());
+                e.printStackTrace();
+            }
         }
 
         return new OrderSubmissionResponse(newOrder.getId(), newOrder.getMatches());
@@ -54,24 +63,24 @@ public class TradingEngineController {
         orderStore.deleteOrder(id);
     }
 
-    private Transaction createTransaction(Order newOrder, MatchResult matchResult) {
+    private Transaction createTransaction(Order newOrder, MatchResult matchResult) throws InvalidTransactionException {
         return new Transaction(newOrder, matchResult);
     }
 
-    private void processFulfilledOrders(Order newOrder, MatchResult matchResult) {
+    private void processFulfilledOrders(Order newOrder, MatchResult matchResult) throws InvalidTransactionException {
         Transaction transaction = createTransaction(newOrder, matchResult);
+        TransactionDTO transactionDTO = new TransactionDTO(transaction);
 
         LOGGER.info("Sending fulfilled orders to TransactionHistory service: transactionId={}, numContracts={}, price={}",
-                transaction.getTransactionId(),
-                transaction.getTotalFilledContracts(),
-                transaction.getTotalAverageExecutionPrice());
+                transactionDTO.getTransactionId(),
+                transactionDTO.getTotalFilledContracts(),
+                transactionDTO.getTotalAverageExecutionPrice());
 
-        transactionHistoryClient.postTransaction(transaction);
+        transactionHistoryClient.postTransaction(transactionDTO);
 
         LOGGER.info("Sent fulfilled orders to TransactionHistory service: transactionId={}, numContracts={}, price={}",
-                transaction.getTransactionId(),
-                transaction.getTotalFilledContracts(),
-                transaction.getTotalAverageExecutionPrice());
+                transactionDTO.getTransactionId(),
+                transactionDTO.getTotalFilledContracts(),
+                transactionDTO.getTotalAverageExecutionPrice());
     }
-
 }
