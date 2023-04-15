@@ -1,36 +1,34 @@
 package com.exchange.exchangeassets.common.transaction;
 
 import com.exchange.exchangeassets.common.Order;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
 import java.util.List;
+import java.util.UUID;
 
-@Entity
 public class TransactionDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int transactionId;
+    private UUID transactionId;
+    private UUID fulfillerId;
     private int totalFilledContracts;
     private double totalAverageExecutionPrice;
-    private String fulfillerId;
     private List<Order> matches;
 
     public TransactionDTO() {
     }
 
     public TransactionDTO(Transaction transaction) {
+        this.transactionId = transaction.getTransactionId();
+        this.fulfillerId = transaction.getFulfillerId();
         this.totalFilledContracts = transaction.getTotalFilledContracts();
         this.totalAverageExecutionPrice = transaction.getTotalAverageExecutionPrice();
         this.matches = transaction.getMatchedWith();
-        this.fulfillerId = transaction.getFulfillerId();
     }
 
-    public int getTransactionId() {
+    public UUID getTransactionId() {
         return transactionId;
+    }
+
+    public UUID getFulfillerId() {
+        return fulfillerId;
     }
 
     public int getTotalFilledContracts() {
@@ -39,10 +37,6 @@ public class TransactionDTO {
 
     public double getTotalAverageExecutionPrice() {
         return totalAverageExecutionPrice;
-    }
-
-    public String getFulfillerId() {
-        return fulfillerId;
     }
 
     public List<Order> getMatches() {

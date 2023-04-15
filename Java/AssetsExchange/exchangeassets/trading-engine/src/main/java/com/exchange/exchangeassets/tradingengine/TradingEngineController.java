@@ -1,7 +1,7 @@
 package com.exchange.exchangeassets.tradingengine;
 
 import com.exchange.exchangeassets.common.*;
-import com.exchange.exchangeassets.common.exceptions.InvalidTransactionException;
+import com.exchange.exchangeassets.common.transaction.exceptions.InvalidTransactionException;
 import com.exchange.exchangeassets.common.transaction.Transaction;
 import com.exchange.exchangeassets.common.transaction.TransactionDTO;
 import org.springframework.beans.factory.annotation.Autowired;

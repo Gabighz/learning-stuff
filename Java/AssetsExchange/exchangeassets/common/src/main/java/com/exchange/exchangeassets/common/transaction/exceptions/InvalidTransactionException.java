@@ -1,4 +1,4 @@
-package com.exchange.exchangeassets.common.exceptions;
+package com.exchange.exchangeassets.common.transaction.exceptions;
 
 public class InvalidTransactionException extends RuntimeException {
     public InvalidTransactionException(String errorMessage) {

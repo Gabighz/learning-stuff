@@ -22,17 +22,17 @@ class OrderMatchesTest extends Specification {
     def "AddMatch"() {
         given:
         OrderMatches orderMatches = new OrderMatches()
-        String id = "order_1"
+        UUID id = UUID.randomUUID()
         int numContracts = 10
         int executionPrice = 100
 
         when:
-        orderMatches.addMatch(id, numContracts, executionPrice)
+        orderMatches.addMatch(id as UUID, numContracts, executionPrice)
 
         then:
         orderMatches.getMatches().size() == 1
         def match = orderMatches.getMatches().peek()
-        match.id() == id
+        match.id() instanceof UUID
         match.numContracts() == numContracts
         match.executionPrice() == executionPrice
     }

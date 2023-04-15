@@ -13,12 +13,13 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Entity
 public class Order implements Comparable<Order>{
+
+    private final UUID id;
     private final OrderSide side;
     private final OrderType type;
     private final int numContracts;
     private final int limitPrice;
     private final Currency currency;
-    private final String id;
     private final AtomicInteger remainingContracts;
     private final AtomicReference<OrderStatus> status;
     private final OrderMatches matches;
@@ -26,7 +27,7 @@ public class Order implements Comparable<Order>{
     public Order(OrderSide side, OrderType type, int numContracts, int limitPrice, Currency currency) {
         this.side = side;
         this.type = type;
-        this.id = this.side.name() + '_' + UUID.randomUUID();
+        this.id = UUID.randomUUID();
 
         this.numContracts = numContracts;
         this.limitPrice = limitPrice;
@@ -72,7 +73,7 @@ public class Order implements Comparable<Order>{
         return currency;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 

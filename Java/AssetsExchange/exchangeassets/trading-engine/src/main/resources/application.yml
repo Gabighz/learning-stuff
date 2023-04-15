@@ -1,6 +1,10 @@
 spring:
   application:
     name: trading-engine
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
 
 server:
   port: 8080
@@ -9,12 +13,27 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+      fetchRegistry: true
   instance:
     preferIpAddress: true
 
 logging:
   level:
     root: INFO
+
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 5000
+  ConnectTimeout: 2000
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 2000
+        readTimeout: 5000
+        retryer: com.netflix.feign.Retryer.Default
 
 management:
   endpoints:

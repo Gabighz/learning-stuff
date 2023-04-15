@@ -1,17 +1,19 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE DATABASE transactionhistory;
 
 \c transactionhistory;
 
 CREATE TABLE IF NOT EXISTS transactions (
-    id SERIAL PRIMARY KEY,
-    fulfiller_id BIGINT NOT NULL,
+    id UUID PRIMARY KEY,
+    fulfiller_id UUID NOT NULL,
     total_filled_contracts INTEGER NOT NULL,
     total_average_execution_price INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS orders (
-    id SERIAL PRIMARY KEY,
-    transaction_id INTEGER REFERENCES transactions (id)
+    id UUID PRIMARY KEY,
+    transaction_id UUID REFERENCES transactions (id)
 );
 
 DO $$
@@ -24,4 +26,4 @@ BEGIN
 END
 $$;
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON transactions, orders TO transaction_history_service;
+GRANT INSERT ON transactions, orders TO transaction_history_service;

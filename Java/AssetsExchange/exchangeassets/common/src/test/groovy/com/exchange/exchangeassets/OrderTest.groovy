@@ -79,7 +79,7 @@ class OrderTest extends Specification {
 
         expect:
         order.getId() != null
-        order.getId().startsWith("BUY_")
+        order.getId() instanceof UUID
     }
 
     def "GetRemainingContracts"() {

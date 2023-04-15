@@ -2,7 +2,7 @@ package com.exchange.exchangeassets.common.transaction;
 
 import com.exchange.exchangeassets.common.MatchResult;
 import com.exchange.exchangeassets.common.Order;
-import com.exchange.exchangeassets.common.exceptions.InvalidTransactionException;
+import com.exchange.exchangeassets.common.transaction.exceptions.InvalidTransactionException;
 import org.springframework.data.util.Pair;
 
 import java.util.List;
@@ -10,18 +10,18 @@ import java.util.UUID;
 
 public class Transaction {
 
-    private final String id;
-    private final String fulfillerId;
+    private final UUID id;
+    private final UUID fulfillerId;
     private final int totalFilledContracts;
     private final double totalAverageExecutionPrice;
     private final List<Order> matchedWith;
 
     public Transaction(Order newOrder, MatchResult matchResult) throws InvalidTransactionException {
-        this.id = String.valueOf(UUID.randomUUID());
+        this.id = UUID.randomUUID();
         List<Pair<Integer, Integer>> filledContracts = matchResult.filledContracts();
         matchedWith = matchResult.matchedOrders();
 
-        List<String> fulfilledOrderIds = matchResult.matchedOrders().stream()
+        List<UUID> fulfilledOrderIds = matchResult.matchedOrders().stream()
                 .filter(Order::isFulfilled)
                 .map(Order::getId)
                 .toList();
@@ -45,8 +45,12 @@ public class Transaction {
         totalAverageExecutionPrice = (double) sumOfAverageExecutionPrices / matchedWith.size();
     }
 
-    public String getTransactionId() {
+    public UUID getTransactionId() {
         return id;
+    }
+
+    public UUID getFulfillerId() {
+        return fulfillerId;
     }
 
     public int getTotalFilledContracts() {
@@ -59,10 +63,6 @@ public class Transaction {
 
     public List<Order> getMatchedWith() {
         return matchedWith;
-    }
-
-    public String getFulfillerId() {
-        return fulfillerId;
     }
 
 }

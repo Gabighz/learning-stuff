@@ -1,5 +1,6 @@
 package com.exchange.exchangeassets.common;
 
+import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class OrderMatches {
@@ -13,11 +14,11 @@ public class OrderMatches {
         return matches;
     }
 
-    public void addMatch(String id, int numContracts, int executionPrice) {
+    public void addMatch(UUID id, int numContracts, int executionPrice) {
         Match newMatch = new Match(id, numContracts, executionPrice);
         matches.add(newMatch);
     }
 
-    public record Match(String id, int numContracts, int executionPrice) {
+    public record Match(UUID id, int numContracts, int executionPrice) {
     }
 }
