@@ -1,8 +1,6 @@
 package com.exchange.exchangeassets.transactionhistory;
 
 import com.exchange.exchangeassets.common.transaction.TransactionDTO;
-import com.exchange.exchangeassets.transactionhistory.dao.TransactionDAO;
-import com.exchange.exchangeassets.transactionhistory.entities.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,11 @@ public class TransactionHistoryController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionHistoryController.class);
 
-    @Autowired
-    TransactionDAO transactionDAO;
+    TransactionSaver transactionSaver;
+
+    public TransactionHistoryController(TransactionSaver transactionSaver) {
+        this.transactionSaver = transactionSaver;
+    }
 
     @PostMapping("/transactions")
     void receiveTransaction(@RequestBody TransactionDTO transactionDTO) {
@@ -28,7 +29,8 @@ public class TransactionHistoryController {
                 transactionDTO.getTotalAverageExecutionPrice(),
                 transactionDTO.getMatches().size());
 
-        transactionDAO.save(new Transaction(transactionDTO));
+        transactionSaver.saveTransactionAndMatchingOrders(transactionDTO);
 
+        LOGGER.info("Committed transaction with transactionId={}", transactionDTO.getTransactionId());
     }
 }
