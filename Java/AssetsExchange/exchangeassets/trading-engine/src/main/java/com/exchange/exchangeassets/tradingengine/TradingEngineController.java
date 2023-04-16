@@ -4,7 +4,7 @@ import com.exchange.exchangeassets.common.*;
 import com.exchange.exchangeassets.common.transaction.exceptions.InvalidTransactionException;
 import com.exchange.exchangeassets.common.transaction.Transaction;
 import com.exchange.exchangeassets.common.transaction.TransactionDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.exchange.exchangeassets.tradingengine.orderstore.OrderStore;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
@@ -15,19 +15,14 @@ import java.util.Collection;
 @RestController
 public class TradingEngineController {
 
-    final OrderStore orderStore;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(TradingEngineController.class);
+    private final OrderStore orderStore;
+    private final TransactionHistoryClient transactionHistoryClient;
 
-    TransactionHistoryClient transactionHistoryClient;
-
-    @Autowired
-    TradingEngineController(OrderStore orderStore) {
+    public TradingEngineController(
+            OrderStore orderStore,
+            TransactionHistoryClient transactionHistoryClient) {
         this.orderStore = orderStore;
-    }
-
-    @Autowired
-    void setTransactionHistoryClient(TransactionHistoryClient transactionHistoryClient){
         this.transactionHistoryClient = transactionHistoryClient;
     }
 
@@ -39,7 +34,7 @@ public class TradingEngineController {
     @PostMapping("/orders")
     @ResponseStatus(HttpStatus.CREATED)
     OrderSubmissionResponse submitOrder(@RequestBody Order newOrder) {
-        MatchResult matchResult = OrderMatcher.matchOrders(orderStore, newOrder);
+        MatchResult matchResult = OrderMatcher.matchOrders(orderStore::getOrders, newOrder);
 
         if (newOrder.isNotFulfilled()) {
             orderStore.getOrders().add(newOrder);
@@ -70,11 +65,6 @@ public class TradingEngineController {
     private void processFulfilledOrders(Order newOrder, MatchResult matchResult) throws InvalidTransactionException {
         Transaction transaction = createTransaction(newOrder, matchResult);
         TransactionDTO transactionDTO = new TransactionDTO(transaction);
-
-        LOGGER.info("Sending fulfilled orders to TransactionHistory service: transactionId={}, numContracts={}, price={}",
-                transactionDTO.getTransactionId(),
-                transactionDTO.getTotalFilledContracts(),
-                transactionDTO.getTotalAverageExecutionPrice());
 
         transactionHistoryClient.postTransaction(transactionDTO);
 

@@ -18,6 +18,7 @@ public class OrderHistory {
 
     public OrderHistory() {
     }
+
     public OrderHistory (UUID orderUUID, TransactionDTO transactionDTO) {
         this.orderId = orderUUID;
         this.transactionId = transactionDTO.getTransactionId();

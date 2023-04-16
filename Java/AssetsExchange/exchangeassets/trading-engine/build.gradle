@@ -2,6 +2,7 @@ dependencies {
     implementation project(':common')
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     testImplementation 'com.jayway.jsonpath:json-path:2.6.0'
 }

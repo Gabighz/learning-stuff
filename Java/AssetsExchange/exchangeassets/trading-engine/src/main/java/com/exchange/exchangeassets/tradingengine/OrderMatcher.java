@@ -1,16 +1,22 @@
-package com.exchange.exchangeassets.common;
+package com.exchange.exchangeassets.tradingengine;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import com.exchange.exchangeassets.common.MatchResult;
+import com.exchange.exchangeassets.common.Order;
 import org.springframework.data.util.Pair;
 
 public class OrderMatcher {
 
-    public static MatchResult matchOrders(OrderStore currentOrders, Order newOrder) {
+    public static MatchResult matchOrders(Supplier<Collection<Order>> currentOrdersSupplier, Order newOrder) {
         List<Pair<Integer, Integer>> filledContracts = new ArrayList<>();
 
-        List<Order> matchedOrders = currentOrders.getOrders().stream()
+        Collection<Order> currentOrders = currentOrdersSupplier.get();
+        List<Order> matchedOrders = currentOrders.stream()
                 .filter(order -> order.canBeMatchedWith(newOrder))
                 .peek(order -> filledContracts.add(modifyOrders(order, newOrder)))
                 .collect(Collectors.toList());

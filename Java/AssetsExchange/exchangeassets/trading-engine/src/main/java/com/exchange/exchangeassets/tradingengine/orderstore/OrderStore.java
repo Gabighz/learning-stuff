@@ -1,4 +1,6 @@
-package com.exchange.exchangeassets.common;
+package com.exchange.exchangeassets.tradingengine.orderstore;
+
+import com.exchange.exchangeassets.common.Order;
 
 import java.util.Collection;
 

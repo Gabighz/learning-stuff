@@ -1,20 +1,19 @@
-package com.exchange.exchangeassets
+package com.exchange.exchangeassets.tradingengine
 
-import com.exchange.exchangeassets.common.DefaultOrderStore
+import com.exchange.exchangeassets.tradingengine.orderstore.ListOrderStore
+import com.exchange.exchangeassets.tradingengine.orderstore.OrderStore
 import com.exchange.exchangeassets.common.enums.Currency
 import com.exchange.exchangeassets.common.enums.OrderSide
 import com.exchange.exchangeassets.common.enums.OrderStatus
 import com.exchange.exchangeassets.common.enums.OrderType
 import com.exchange.exchangeassets.common.Order
-import com.exchange.exchangeassets.common.OrderMatcher
-import com.exchange.exchangeassets.common.OrderStore
 import spock.lang.Specification
 
 class OrderMatcherTest extends Specification {
 
     def "MatchOrders"() {
         given:
-        OrderStore orderStore = new DefaultOrderStore()
+        OrderStore orderStore = new ListOrderStore()
         Order buyOrder = new Order(OrderSide.BUY, OrderType.LIMIT, 10, 100, Currency.USD)
         Order sellOrder = new Order(OrderSide.SELL, OrderType.LIMIT, 10, 100, Currency.USD)
         orderStore.addOrder(buyOrder)
@@ -22,7 +21,7 @@ class OrderMatcherTest extends Specification {
 
         when:
         Order newOrder = new Order(OrderSide.BUY, OrderType.LIMIT, 5, 100, Currency.USD)
-        OrderMatcher.matchOrders(orderStore, newOrder)
+        OrderMatcher.matchOrders(orderStore::getOrders, newOrder)
 
         then:
         buyOrder.getRemainingContracts() == 10

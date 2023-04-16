@@ -24,6 +24,7 @@ public class Transaction {
 
     public Transaction() {
     }
+
     public Transaction(TransactionDTO transactionDTO) {
         this.transactionId = transactionDTO.getTransactionId();
         this.fulfillerId = transactionDTO.getFulfillerId();
