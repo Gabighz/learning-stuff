@@ -5,6 +5,9 @@ buildscript {
         springCloudVersion = '2022.0.1'
         groovyVersion = '4.0.5'
         spockVersion = '2.3-groovy-4.0'
+        kafkaVersion = '3.0.5'
+        nodepVersion = '3.3.0'
+        annotationsVersion = '23.0.0'
     }
 }
 
@@ -49,15 +52,15 @@ subprojects {
         implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'org.springframework.data:spring-data-commons'
-        implementation 'org.redisson:redisson:3.20.1'
+        implementation "org.springframework.kafka:spring-kafka:${kafkaVersion}"
 
         implementation platform("org.apache.groovy:groovy-bom:${groovyVersion}")
         testImplementation platform("org.spockframework:spock-bom:${spockVersion}")
         testImplementation 'org.spockframework:spock-core'
         testImplementation 'org.spockframework:spock-spring'
-        testImplementation 'cglib:cglib-nodep:3.3.0'
+        testImplementation "cglib:cglib-nodep:${nodepVersion}"
 
-        implementation 'org.jetbrains:annotations:23.0.0'
+        implementation "org.jetbrains:annotations:${annotationsVersion}"
         compileOnly 'org.projectlombok:lombok'
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
         annotationProcessor 'org.projectlombok:lombok'

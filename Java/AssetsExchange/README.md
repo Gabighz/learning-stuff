@@ -41,14 +41,20 @@ And this is how it might be represented internally (i.e. by the `Order` class in
 
 Technologies that have been used so far:
 
-- Java 19, Spring Boot + Data + Cloud, Gradle, Groovy, Spock, Eureka, Hibernate, PostgreSQL ([starter script here](https://github.com/Gabighz/learning-stuff/blob/master/Java/AssetsExchange/exchangeassets/transaction-history/src/main/resources/starter.sql)), Redis (with Redisson)
+- Java 19, Spring Boot + Data + Cloud, Gradle, Groovy, Spock, Hibernate, PostgreSQL ([starter script here](https://github.com/Gabighz/learning-stuff/blob/master/Java/AssetsExchange/exchangeassets/transaction-history/src/main/resources/starter.sql)), Redis (with Redisson), Kafka
 
-Planned integrations:
+### Justifications
 
-- Kafka as a message queue to address possible congestion. It should sit between the order receiving service and the order processing service (i.e. Trading Engine). This would decouple these services allowing them to scale independently, provide fault tolerance by ensuring that messages are not lost in case of failures in the processing service and allow it to catch up with a backlog of orders in case of congestion.
-- Infrastructure-related: Nginx, Docker, Kubernetes & Eureka *, Terraform for AWS, a CI/CD config probably for Jenkins.
+- Kafka is used as a message queue to address possible congestion. It should sit between the services, with a topic from the order-receiving-service to the trading-engine and another topic for trading-engine to transaction-history-service. This decouples these services, allowing them to scale independently, provide fault tolerance by ensuring that messages are not lost in case of failures in the processing service and allow it to catch up with a backlog of orders in case of congestion. Lastly, from my experience and from a development perspective, it is **a lot** easier to have it for communication between services than Eureka + Feign (used in previous iterations).
+- Redis is used as a primary in-memory database for to-be-filled orders. Given that orders, in a hypothetical scenario, would come and go really fast, its low-latence and high throughput makes it suitable for this. Persistance is traded-off for speed. The default persistance option is used: RDB persistence with snapshots every 15 minutes.
 
-\* - Will first use Eureka for service discovery. Then in a second version, named `exchangeassets-k8s`, will use Kubernetes and not Eureka.
+Planned integrations / tech stack improvements:
+
+- An observability stack.
+- Sharded PostgreSQL cluster.
+- Sharded Redis cluster.
+- A production-grade multi-broker Kafka cluster (current replication factor is 1)
+- Infrastructure-related: Nginx, Docker, Kubernetes, Terraform for AWS, a CI/CD config probably for Jenkins.
 
 ## Usage
 The following API endpoints are available on the current implementation:
@@ -69,8 +75,6 @@ For a more formal description, the OpenAPI 3.0 specification at [exchangeassets/
 ### Planned Architecture for the very near future
 ![](assetsexchange.png)
 
-NOTE: To add class diagrams as well.
-
 ## Features to be added:
 In order of estimated difficulty and order of implementation:
 
@@ -78,3 +82,10 @@ In order of estimated difficulty and order of implementation:
 - Handle different types of orders, such as market orders, limit orders, and stop orders.
 - Create a user management system to handle user authentication, authorization, and user-related data such as portfolios and transaction history.
     - As part of this, a client should be able to delete an order that they submitted and not those submitted by other clients.
+
+## A history of iterations
+
+Started on Mar 17, 2023 with basic initial setup (commit 2274707).
+
+First 'major version': Apr 4, 2023 (commit 2511400)
+![](first_iteration.png)

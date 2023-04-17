@@ -1,6 +1,6 @@
 package com.exchange.exchangeassets
 
-import OrderMatches
+import com.exchange.exchangeassets.common.OrderMatches
 import spock.lang.Specification
 
 import java.util.concurrent.ConcurrentLinkedQueue

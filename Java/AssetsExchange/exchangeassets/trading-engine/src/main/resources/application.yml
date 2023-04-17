@@ -1,44 +1,23 @@
 spring:
   application:
     name: trading-engine
-  cloud:
-    loadbalancer:
-      retry:
-        enabled: true
   redis:
     host: localhost
     port: 6379
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        enable:
+          idempotence: true
 
 server:
   port: 8080
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
-      fetchRegistry: true
-  instance:
-    preferIpAddress: true
-
 logging:
   level:
     root: INFO
-
-ribbon:
-  eureka:
-    enabled: true
-  ReadTimeout: 5000
-  ConnectTimeout: 2000
-
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 2000
-        readTimeout: 5000
-        retryer: com.netflix.feign.Retryer.Default
-  request:
-    compression: false
 
 management:
   endpoints:

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import java.util.Collection;
 
@@ -17,13 +18,13 @@ public class TradingEngineController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TradingEngineController.class);
     private final OrderStore orderStore;
-    private final TransactionHistoryClient transactionHistoryClient;
+    private final KafkaTemplate<String, TransactionDTO> kafkaTemplate;
 
     public TradingEngineController(
             OrderStore orderStore,
-            TransactionHistoryClient transactionHistoryClient) {
+            KafkaTemplate<String, TransactionDTO> kafkaTemplate) {
         this.orderStore = orderStore;
-        this.transactionHistoryClient = transactionHistoryClient;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @GetMapping("/orders")
@@ -75,7 +76,10 @@ public class TradingEngineController {
         Transaction transaction = createTransaction(newOrder, matchResult);
         TransactionDTO transactionDTO = new TransactionDTO(transaction);
 
-        transactionHistoryClient.postTransaction(transactionDTO);
+        kafkaTemplate.executeInTransaction(kt -> {
+            kt.send("transaction-history-events", transactionDTO);
+            return "null";
+        });
 
         LOGGER.info("Sent fulfilled orders to TransactionHistory service: transactionId={}, numContracts={}, price={}",
                 transactionDTO.getTransactionId(),
