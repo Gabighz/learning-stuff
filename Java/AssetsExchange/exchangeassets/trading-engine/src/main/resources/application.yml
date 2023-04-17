@@ -5,6 +5,9 @@ spring:
     loadbalancer:
       retry:
         enabled: true
+  redis:
+    host: localhost
+    port: 6379
 
 server:
   port: 8080
@@ -34,6 +37,8 @@ feign:
         connectTimeout: 2000
         readTimeout: 5000
         retryer: com.netflix.feign.Retryer.Default
+  request:
+    compression: false
 
 management:
   endpoints:

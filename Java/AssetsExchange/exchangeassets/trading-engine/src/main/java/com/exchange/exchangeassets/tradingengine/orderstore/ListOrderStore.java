@@ -9,7 +9,6 @@ import java.util.concurrent.ConcurrentSkipListSet;
 
 @Component
 public class ListOrderStore implements OrderStore {
-    // NOTE: To be replaced with a data store, such as Redis. Only unfulfilled or partially filled Orders should be stored here.
     private final ConcurrentSkipListSet<Order> orders = new ConcurrentSkipListSet<>();
 
     @Override
@@ -24,6 +23,6 @@ public class ListOrderStore implements OrderStore {
 
     @Override
     public void deleteOrder(String id) {
-        orders.removeIf(order -> Objects.equals(order.getId(), id));
+        orders.removeIf(order -> Objects.equals(String.valueOf(order.getId()), id));
     }
 }

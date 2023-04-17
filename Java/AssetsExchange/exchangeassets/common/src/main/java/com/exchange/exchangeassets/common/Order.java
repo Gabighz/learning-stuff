@@ -7,12 +7,13 @@ import com.exchange.exchangeassets.common.enums.OrderType;
 import jakarta.persistence.Entity;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Entity
-public class Order implements Comparable<Order>{
+public class Order implements Comparable<Order>, Serializable {
 
     private final UUID id;
     private final OrderSide side;
@@ -32,6 +33,19 @@ public class Order implements Comparable<Order>{
         this.numContracts = numContracts;
         this.limitPrice = limitPrice;
         this.currency = currency;
+        this.remainingContracts = new AtomicInteger(numContracts);
+        this.status = new AtomicReference<>(OrderStatus.Unfulfilled);
+        this.matches = new OrderMatches();
+    }
+
+    public Order() {
+        this.side = OrderSide.BUY;
+        this.type = OrderType.LIMIT;
+        this.id = UUID.randomUUID();
+
+        this.numContracts = 0;
+        this.limitPrice = 0;
+        this.currency = Currency.USD;
         this.remainingContracts = new AtomicInteger(numContracts);
         this.status = new AtomicReference<>(OrderStatus.Unfulfilled);
         this.matches = new OrderMatches();

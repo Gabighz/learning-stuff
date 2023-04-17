@@ -49,6 +49,7 @@ subprojects {
         implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'org.springframework.data:spring-data-commons'
+        implementation 'org.redisson:redisson:3.20.1'
 
         implementation platform("org.apache.groovy:groovy-bom:${groovyVersion}")
         testImplementation platform("org.spockframework:spock-bom:${spockVersion}")

@@ -41,13 +41,11 @@ And this is how it might be represented internally (i.e. by the `Order` class in
 
 Technologies that have been used so far:
 
-- Java 19, Spring Boot + Data + Cloud, Gradle, Groovy, Spock, Eureka, Hibernate, PostgreSQL ([starter script here](https://github.com/Gabighz/learning-stuff/blob/master/Java/AssetsExchange/exchangeassets/transaction-history/src/main/resources/starter.sql))
+- Java 19, Spring Boot + Data + Cloud, Gradle, Groovy, Spock, Eureka, Hibernate, PostgreSQL ([starter script here](https://github.com/Gabighz/learning-stuff/blob/master/Java/AssetsExchange/exchangeassets/transaction-history/src/main/resources/starter.sql)), Redis (with Redisson)
 
 Planned integrations:
 
-- Redis as a data store for unfulfilled or partially filled orders.
 - Kafka as a message queue to address possible congestion. It should sit between the order receiving service and the order processing service (i.e. Trading Engine). This would decouple these services allowing them to scale independently, provide fault tolerance by ensuring that messages are not lost in case of failures in the processing service and allow it to catch up with a backlog of orders in case of congestion.
-- PostgreSQL to store transaction history.
 - Infrastructure-related: Nginx, Docker, Kubernetes & Eureka *, Terraform for AWS, a CI/CD config probably for Jenkins.
 
 \* - Will first use Eureka for service discovery. Then in a second version, named `exchangeassets-k8s`, will use Kubernetes and not Eureka.

@@ -33,11 +33,20 @@ public class TradingEngineController {
 
     @PostMapping("/orders")
     @ResponseStatus(HttpStatus.CREATED)
-    OrderSubmissionResponse submitOrder(@RequestBody Order newOrder) {
-        MatchResult matchResult = OrderMatcher.matchOrders(orderStore::getOrders, newOrder);
+    OrderSubmissionResponse submitOrder(@RequestBody OrderDTO newOrderDTO) {
+        Order newOrder = new Order(
+                newOrderDTO.side(),
+                newOrderDTO.type(),
+                newOrderDTO.numContracts(),
+                newOrderDTO.limitPrice(),
+                newOrderDTO.currency()
+        );
+
+        MatchResult matchResult = OrderMatcher.matchOrders(orderStore::getOrders, orderStore::deleteOrder, newOrder);
+
 
         if (newOrder.isNotFulfilled()) {
-            orderStore.getOrders().add(newOrder);
+            orderStore.addOrder(newOrder);
         }
 
         if (newOrder.isFulfilled() || matchResult.matchedOrders().stream().anyMatch(Order::isFulfilled)) {
